@@ -9,6 +9,7 @@ steps:
       - "GOOGLE_PROJECT_ID=${_GOOGLE_PROJECT_ID}"
       - "GOOGLE_PROJECT_REGION=${_GOOGLE_PROJECT_REGION}"
       - "TELEGRAM_BOT_TOKEN=${_TELEGRAM_BOT_TOKEN}"
+      - "FUNCTION_NAME=${__FUNCTION_NAME}"
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
