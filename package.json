@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node -r dotenv/config app.js dotenv_config_path=.env",
-    "create-env": "printenv > ./env/.env"
+    "create-env": "printenv > .env"
   },
   "author": "",
   "license": "ISC",
