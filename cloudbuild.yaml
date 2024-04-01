@@ -26,6 +26,8 @@ steps:
         "${_GOOGLE_PROJECT_ID}",
         "--entry-point",
         "${_ENTRY_POINT}",
+        "--env-vars-file",
+        ".env",
       ]
 timeout: "1600s"
 options:
