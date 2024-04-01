@@ -2,14 +2,15 @@ steps:
   - name: node:20.0.0
     entrypoint: npm
     args: ["install"]
-  - name: node:20.0.0
-    entrypoint: npm
-    args: ["run", "create-env"]
-    env:
-      - "GOOGLE_PROJECT_ID=${_GOOGLE_PROJECT_ID}"
-      - "GOOGLE_PROJECT_REGION=${_GOOGLE_PROJECT_REGION}"
-      - "TELEGRAM_BOT_TOKEN=${_TELEGRAM_BOT_TOKEN}"
-      - "FUNCTION_NAME=${__FUNCTION_NAME}"
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'bash'
+      - '-c'
+      - |
+        echo "GOOGLE_PROJECT_ID: ${_GOOGLE_PROJECT_ID}" >> .env.yaml 
+        echo "GOOGLE_PROJECT_REGION: ${_GOOGLE_PROJECT_REGION}" >> .env.yaml
+        echo "TELEGRAM_BOT_TOKEN: ${_GOOGLE_PROJECT_REGION}" >> .env.yaml
+        echo "FUNCTION_NAME: ${_FUNCTION_NAME}" >> .env.yaml
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
@@ -27,7 +28,7 @@ steps:
         "--entry-point",
         "${_ENTRY_POINT}",
         "--env-vars-file",
-        ".env"
+        ".env.yaml"
       ]
 timeout: "1600s"
 options:
