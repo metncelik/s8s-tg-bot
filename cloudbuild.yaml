@@ -6,9 +6,9 @@ steps:
     entrypoint: npm
     args: ["run", "create-env"]
     env:
-      - 'GOOGLE_PROJECT_ID=${_GOOGLE_PROJECT_ID}'
-      - 'GOOGLE_PROJECT_REGION=${_GOOGLE_PROJECT_REGION}'
-      - 'TELEGRAM_BOT_TOKEN=${_TELEGRAM_BOT_TOKEN}'
+      - "GOOGLE_PROJECT_ID=${_GOOGLE_PROJECT_ID}"
+      - "GOOGLE_PROJECT_REGION=${_GOOGLE_PROJECT_REGION}"
+      - "TELEGRAM_BOT_TOKEN=${_TELEGRAM_BOT_TOKEN}"
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
@@ -23,6 +23,8 @@ steps:
         "${_GOOGLE_PROJECT_REGION}",
         "--project",
         "${_GOOGLE_PROJECT_ID}",
+        "--entry-point",
+        "${_ENTRY_POINT}",
       ]
 timeout: "1600s"
 options:
