@@ -27,7 +27,7 @@ steps:
         "--entry-point",
         "${_ENTRY_POINT}",
         "--env-vars-file",
-        ".env",
+        ".env"
       ]
 timeout: "1600s"
 options:
