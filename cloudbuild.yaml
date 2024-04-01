@@ -1,0 +1,29 @@
+steps:
+  - name: node:20.0.0
+    entrypoint: npm
+    args: ["install"]
+  - name: node:20.0.0
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - "GOOGLE_PROJECT_ID=${_GOOGLE_PROJECT_ID}"
+      - "GOOGLE_PROJECT_REGION=${_GOOGLE_PROJECT_REGION}"
+      - "TELEGRAM_BOT_TOKEN=${_TELEGRAM_BOT_TOKEN}"
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "functions",
+        "deploy",
+        "${_FUNCTION_NAME}",
+        "--runtime",
+        "nodejs20",
+        "--trigger-http",
+        "--allow-unauthenticated",
+        "--region",
+        "${_GOOGLE_PROJECT_REGION}",
+        "--project",
+        "${_GOOGLE_PROJECT_ID}",
+      ]
+timeout: "1600s"
+options:
+  logging: CLOUD_LOGGING_ONLY
