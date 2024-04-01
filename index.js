@@ -10,6 +10,6 @@ bot.telegram.setWebhook(
     `https://${GOOGLE_CLOUD_REGION}-${GOOGLE_CLOUD_PROJECT_ID}.cloudfunctions.net/${process.env.FUNCTION_TARGET}` //FUNCTION_TARGET is reserved Google Cloud Env
 );
 
-export const telegramBotWebhook = (req, res) => {
-    bot.handleUpdate(req.body, res);
+export const telegramBotWebhook = async (req, res) => {
+    await bot.handleUpdate(req.body, res);
 };
