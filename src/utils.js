@@ -1,5 +1,7 @@
-const photoIDToBase64 = async (file) => {
-    const photo = await bot.telegram.getFileLink(photoID)
+import bot from './../app.js';
+
+const photoIDToBase64 = async (fileID) => {
+    const photo = await bot.telegram.getFileLink(fileID)
     const response = await fetch(photo.href);
     const chunks = [];
     for await (const chunk of response.body) {
@@ -7,7 +9,7 @@ const photoIDToBase64 = async (file) => {
     }
     const buffer = Buffer.concat(chunks);
     const base64 = buffer.toString('base64');
-    ctx.reply('Photo received')
+    return base64;
 }
 
 export { photoIDToBase64 };
