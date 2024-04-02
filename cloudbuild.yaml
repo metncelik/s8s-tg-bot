@@ -33,16 +33,14 @@ steps:
     args:
       [
         "functions",
-        "add-iam-policy-binding",
+        "add-invoker-policy-binding",
         "${_FUNCTION_NAME}",
         "--region",
         "${_GOOGLE_PROJECT_REGION}",
         "--project",
         "${_GOOGLE_PROJECT_ID}",
         "--member",
-        "allUsers",
-        "--role",
-        "roles/cloudfunctions.invoker"
+        "allUsers"
       ]
       
 timeout: "1600s"
