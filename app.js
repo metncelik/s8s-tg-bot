@@ -1,15 +1,31 @@
 import { Telegraf } from 'telegraf';
-import { GOOGLE_CLOUD_PROJECT_ID, TELEGRAM_BOT_TOKEN, GOOGLE_CLOUD_REGION, FUNCTION_NAME } from './config.js';
+import * as c from './config.js';
+import { handleStart } from './src/handlers/commandHandler.js';
+import { handlePhoto } from './src/handlers/photoHandler.js';
+import { handleCallback } from './src/handlers/callbackHandler.js';
 
-const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
-bot.start((ctx) => ctx.reply(`Welcome to the most silly bot you'll ever see`));
-bot.help((ctx) => ctx.reply(`Write anything to me and I'll repeat it :)`));
-bot.on('text', (ctx) => ctx.reply(ctx.message.text));
-bot.on('message', ctx => ctx.reply('Command not recognized'));
-bot.telegram.setWebhook(
-    `https://${GOOGLE_CLOUD_REGION}-${GOOGLE_CLOUD_PROJECT_ID}.cloudfunctions.net/${FUNCTION_NAME}`
-);
+const bot = new Telegraf(c.TELEGRAM_BOT_TOKEN);
+
+bot.command('start', handleStart);
+bot.on('photo', handlePhoto);
+bot.on('callback_query', handleCallback);
+// bot.on('text', (ctx) => ctx.reply(ctx.message.text));
+// bot.on('message', ctx => ctx.reply('Command not recognized'));
+
+bot.use((ctx) => {
+    ctx.reply('Command not recognized');
+});
+
+if (process.env?.NODE_ENV === 'development') {
+    bot.launch();
+} else {
+    bot.telegram.setWebhook(
+        `https://${c.GOOGLE_CLOUD_REGION}-${c.GOOGLE_CLOUD_PROJECT_ID}.cloudfunctions.net/${c.FUNCTION_NAME}`
+    );
+}
 
 export const telegramBotWebhook = async (req, res) => {
     await bot.handleUpdate(req.body, res);
 };
+
+export default bot;
