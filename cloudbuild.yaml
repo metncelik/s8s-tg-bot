@@ -6,8 +6,8 @@ steps:
     args:
       - '-c'
       - |
-        echo "GOOGLE_PROJECT_ID: ${_GOOGLE_PROJECT_ID}" >> .env.yaml 
-        echo "GOOGLE_PROJECT_REGION: ${_GOOGLE_PROJECT_REGION}" >> .env.yaml
+        echo "GOOGLE_CLOUD_PROJECT_ID: ${_GOOGLE_CLOUD_PROJECT_ID}" >> .env.yaml 
+        echo "GOOGLE_CLOUD_REGION: ${_GOOGLE_CLOUD_REGION}" >> .env.yaml
         echo "TELEGRAM_BOT_TOKEN: ${_TELEGRAM_BOT_TOKEN}" >> .env.yaml
         echo "FUNCTION_NAME: ${_FUNCTION_NAME}" >> .env.yaml
   - name: "gcr.io/cloud-builders/gcloud"
@@ -21,9 +21,9 @@ steps:
         "--trigger-http",
         "--allow-unauthenticated",
         "--region",
-        "${_GOOGLE_PROJECT_REGION}",
+        "${_GOOGLE_CLOUD_REGION}",
         "--project",
-        "${_GOOGLE_PROJECT_ID}",
+        "${_GOOGLE_CLOUD_PROJECT_ID}",
         "--entry-point",
         "${_ENTRY_POINT}",
         "--env-vars-file",
@@ -36,9 +36,9 @@ steps:
         "add-invoker-policy-binding",
         "${_FUNCTION_NAME}",
         "--region",
-        "${_GOOGLE_PROJECT_REGION}",
+        "${_GOOGLE_CLOUD_REGION}",
         "--project",
-        "${_GOOGLE_PROJECT_ID}",
+        "${_GOOGLE_CLOUD_PROJECT_ID}",
         "--member",
         "allUsers"
       ]
