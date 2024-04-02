@@ -29,6 +29,22 @@ steps:
         "--env-vars-file",
         ".env.yaml"
       ]
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "functions",
+        "add-iam-policy-binding",
+        "${_FUNCTION_NAME}",
+        "--region",
+        "${_GOOGLE_PROJECT_REGION}",
+        "--project",
+        "${_GOOGLE_PROJECT_ID}",
+        "--member",
+        "allUsers",
+        "--role",
+        "roles/cloudfunctions.invoker"
+      ]
+      
 timeout: "1600s"
 options:
   logging: CLOUD_LOGGING_ONLY
