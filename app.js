@@ -16,6 +16,11 @@ bot.use((ctx) => {
     ctx.reply('Command not recognized');
 });
 
+bot.catch((err, ctx) => {
+    console.log(`Error for ${ctx.updateType}`, err);
+    ctx.reply('An error occurred');
+});
+
 if (process.env?.NODE_ENV === 'development') {
     bot.launch();
 } else {
