@@ -10,6 +10,30 @@ steps:
         echo "GOOGLE_CLOUD_REGION: ${_GOOGLE_CLOUD_REGION}" >> .env.yaml
         echo "TELEGRAM_BOT_TOKEN: ${_TELEGRAM_BOT_TOKEN}" >> .env.yaml
         echo "FUNCTION_NAME: ${_FUNCTION_NAME}" >> .env.yaml
+        echo "BOT_USERNAME: ${_BOT_USERNAME}" >> .env.yaml
+        echo "CHANNEL_USERNAME: ${_CHANNEL_USERNAME}" >> .env.yaml
+        echo "LOG_CHANNEL: ${_LOG_CHANNEL}" >> .env.yaml
+        echo "NODE_ENV: ${_NODE_ENV}" >> .env.yaml
+        echo "POST_ENDPOINT: ${_POST_ENDPOINT}" >> .env.yaml
+        echo "FETCH_ENDPOINT: ${_FETCH_ENDPOINT}" >> .env.yaml
+        echo "RP_POST_ENDPOINT: ${_RP_POST_ENDPOINT}" >> .env.yaml
+        echo "RP_FETCH_ENDPOINT: ${_RP_FETCH_ENDPOINT}" >> .env.yaml
+        echo "RP_API_KEY: ${_RP_API_KEY}" >> .env.yaml
+        echo "SECRET_KEY: ${_SECRET_KEY}" >> .env.yaml
+        echo "REFERRAL_LIMIT: '${_REFERRAL_LIMIT}'" >> .env.yaml
+        echo "FREE_TOKENS_LIMIT: '${_FREE_TOKENS_LIMIT}'" >> .env.yaml
+        echo "API_SOURCE: ${_API_SOURCE}" >> .env.yaml
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "functions",
+        "delete",
+        "${_FUNCTION_NAME}",
+         "--region",
+        "${_GOOGLE_CLOUD_REGION}",
+        "--project",
+        "${_GOOGLE_CLOUD_PROJECT_ID}"
+      ]
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [

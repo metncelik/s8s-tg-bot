@@ -21,9 +21,11 @@ bot.catch((err, ctx) => {
     ctx.reply('An error occurred');
 });
 
-if (process.env?.NODE_ENV === 'development') {
+const NODE_ENV = process.env.NODE_ENV;
+
+if (NODE_ENV === 'development') {
     bot.launch();
-} else {
+} else (NODE_ENV === 'production') {
     bot.telegram.setWebhook(
         `https://${c.GOOGLE_CLOUD_REGION}-${c.GOOGLE_CLOUD_PROJECT_ID}.cloudfunctions.net/${c.FUNCTION_NAME}`
     );
